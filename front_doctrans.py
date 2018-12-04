@@ -14,19 +14,18 @@ rt=Tk()
 # rt.title ("Document Transitor Test Alternate")
 
 # ==========================================
-rt.title("Document Transistor Test")
+rt.title("Document Transistor 02Dec2018")
 # window.title ("juboRasp") old junk
 
-rt.geometry ("800x600")
+rt.geometry ("1000x600")
 #label upcoming
 # commented out next two lines 1515Nov18 220pm
 #title = rt.Label (text="entry screen")
 
 #title.grid (column=0, row=0)
 
-#==== Phase One : Labels for Variables GB vid #1 =====
+#==== Labels for screen entry boxes=====
 r=2
-#rt=TK()
 l0=Label(rt,text="Enter Transactn Below")
 l0.grid(row=r-1,column=0)
 
@@ -42,7 +41,7 @@ l3.grid(row=r+3,column=0)
 l4=Label(rt,text="pmt_kind ")
 l4.grid(row=r+4,column=0)
 
-# ====== Phase One : data entry variables [empty entry blocks for data] say GB==
+# ====== data entry specifications for input variables [empty entry blocks for data] =
 wheen=StringVar()
 e1=Entry(rt,textvariable=wheen)
 e1.grid(row=r+1,column=1)
@@ -58,37 +57,26 @@ e3.grid(row=r+3,column=1)
 pmt_kind=StringVar()
 e4=Entry(rt,textvariable=pmt_kind)
 e4.grid(row=r+4,column=1)
-"""
-wheen=StringVar()
-e1=Entry(rt,textvariable=wheen)
-e2.grid(row=r+1,column=1)
-"""
-#==== Phase One : Listbox Section : box sits below the entry field boxes ==GB===
+
+# ==Listbox Section : box sits below the entry field boxes ==GB===
+# ===  scroll bar on right associated with Listbox ===
+# lb01.configure(yscroll?????)
 lb01=Listbox(rt,height=6,width=40)
 lb01.grid(row=8,column=0, rowspan=8, columnspan=6)
-
 sb01=Scrollbar(rt)
 sb01.grid(row=7,column=5,rowspan=8)
-
 lb01.configure(yscrollcommand=sb01.set)
-
-# === Phase One : scroll bar on right associated with Listbox ===
-# lb01.configure(yscroll?????)
-
 sb01.configure(command=lb01.yview)
 
 # ++++ COMMAND FUNCTIONS SECTION +++++
-
-# ==== Phase One : add entry fields to database ==GB ====
-# ==== grayed out for Phase Two====
-#=== Phase Three : presenting a series of xxx_command lines associated with
+#=== a set of xxx_command lines "called by button (below) pushes by
 # === "control" buttons ===================
 # === below is view_command but needs editing for the lbl definition ===
-# === lb01 relateds to Listbox ====
+# === lb01 relates to Listbox ====
 def view_command():
     lb01.delete(0,END)
 # === the below is a looping that sets otherwhere defined dt1backund.view as
-#=== the variable rows  (so we have for each row in rows do the work) ====GB
+#=== the variable rows  (so we have for each row in rows do the work) ====
     for row in dt1backund.view():
         lb01.insert(END,row)
 
@@ -122,8 +110,7 @@ def clearit_command():
 def findit_command():
     lb01.delete(0,END)
 #=== deletes everything showing in list box ===
-    for row in dt1backund.findit(wheen.get(),dlrs.get(), \
-    who_store.get(),pmt_kind.get()):
+    for row in dt1backund.findit(wheen.get(), dlrs.get(), who_store.get(), pmt_kind.get()):
         lb01.insert(END,row)
 # ==at the end of work in the back end the ftn there "returns the call" ===
 #== to the above "for row in dt1bakund ..." and the reply is ====
@@ -131,11 +118,24 @@ def findit_command():
 # ===== end the findit_command === makes call to backend file ===
 # =======the update command === tt 18Nov18 ====
 """
+#==GB code===
+
 def updt_command():
-    if(len(wheen.get())!=0:
-        dtbackund.updt(tt[0],wheen.get(),dlrs.get(), \
+    if(len(fn.get())!=0):
+        be.updt(tt[0], fn.get(),ln.get(),dpt.get(),sal.get())
+# ==tt notes that GB have no view_command() === 02Dec18 ===
+#==end GB code==
+"""
+def updt_command():
+    if(len(wheen.get())!=0):
+        dt1backund.updt(tt[0],wheen.get(),dlrs.get(), \
         who_store.get(),pmt_kind.get())
-        view_command
+"""
+
+ def updt_command():
+    if(len(fn.get())!=0):
+        be.updt(tt[0], fn.get(),ln.get(),dpt.get(),sal.get())
+#       view_command  #rem out ==02Dec18 tt ===
 
 # === junk   if(not(e1.get("1.0",END))=="\n"):
 # === junk       zbe.updt(tt[0], e1.get("1.0",END),e2.get("1.0",END))
@@ -146,9 +146,32 @@ def updt_command():
 
 # ======== Fetch the Records from Database section ==================
 # === define the gtr =====
-def gtr(event):
-# ====== gtr = get the record
-    global tt
+
+"""
+def gdr(event): # gtr = get the record
+    global tt       # target tuple
+    yoid=lb1.curselection()[0] # gets the
+                                               # actual nbr
+                                               # in: listbox
+    # lb1.curselection()[0] <== order nbr in dbase & listbox
+    tt=lb1.get(yoid) # get rec assoc'd w/yoid
+
+    # lb1.curselection()[0] <== order nbr in dbase & listbox
+    # tt[0] is the primary field: id, of that record.
+    # print(lb1.curselection()[0],tt[0])
+    e1.delete(0,END)
+    e1.insert(END,tt[1])
+    e2.delete(0,END)
+    e2.insert(END,tt[2])
+    e3.delete(0,END)
+    e3.insert(END,tt[3])
+    e4.delete(0,END)
+    e4.insert(END,tt[4])
+
+"""
+# ====== gtr = get the record or gdr = get dat record === vernacular 
+def gdr(event):
+    tt = "global"
 # ========= target tuple === gbobal variable declared
     yoid=lb01.curselection()[0]
     # gets the actual nbr in listbox = lb01 (name of listbox)
@@ -159,9 +182,9 @@ def gtr(event):
     # lb1.curselection()[0] <== order nbr in dbase & listbox
     # tt[0] is the primary field: id, of that record.
     # print(lb1.curselection()[0],tt[0])
-    e1.delete('1.0',END)  # ==wheen==
+    e1.delete(0,END)  # ==wheen==
     e1.insert(END,tt[1])
-    e2.delete('1.0',END)  # === dlrs ===
+    e2.delete(0,END)  # === dlrs ===
     e2.insert(END,tt[2])
     e3.delete(0,END)    # === who_store ===
     e3.insert(END,tt[3])
@@ -169,13 +192,22 @@ def gtr(event):
     e4.insert(END,tt[4])
 
 # ===== end the fetch the records section of code stack =====
+#===========Bind function============
+# === tf forgot to put in this section earlier ===
+# === tf was wondering where the gdr was called 04Dec2018===
+lb01.bind('<<ListboxSelect>>', gdr)
+"""
+lb1.bind('<<ListboxSelect>>', gdr)
+# we gotta define the func gdr
+# in the define cmds area, at the top
+# g=get  d=dat   r=record
+"""
 
 # ++++ BUTTON DEFINITIONS SECTION +++++
-
-# ====Phase One : instantiate button on screen to activate the adding of
+# ====instantiate button on screen to activate the manipulation of data in 
 #===== entry fields to the database ====
 # =======Button : btn01 =======
-btn01=Button(rt,text="NuRcdSav", width=15, command=add_command)
+btn01=Button(rt,text="NuRcd:Add", width=15, command=add_command)
 btn01.grid(row=0,column=1)
 #=======================end Button :btn01 ================
 # ======== Phase Three : additional buttons different by text - xxx_command
@@ -190,21 +222,21 @@ btn02.grid(row=0,column=0)
 
 btn03=Button(rt,text="Drp:Del", width=15, command=dele_command)
 btn03.grid(row=0,column=2)
-
-# btn04=Button(rt,text="Mod:Updt", width=15, command=updt_command)
-# btn04.grid(row=0,column=3)
-
+""" ===GB button no4 ===
+b4=Button(rt,text="Update", width=10, command=updt_command)
+b4.grid(row=0,column=4)
+=== end GB button no4 ===
+"""
+# tt btn04 enabled 02Dec18 0900 edt===
+btn04=Button(rt,text="Mod:Updt", width=15, command=updt_command)
+btn04.grid(row=0,column=3)
 btn05=Button(rt,text="Sch:Fnd", width=15, command=findit_command)
 btn05.grid(row=0,column=4)
-
 btn06=Button(rt,text="Clear:Blnk", width=15, command=clearit_command)
 btn06.grid(row=0,column=5)
-
-"""
 btn07=Button(rt,text="Exit:Clse", width=10, command=rt.destroy)
 btn07.grid(row=0,column=7)
-
-"""
+# === exit button needs no associated commands or funtion calls===
 # ===== delete definitions section ======
 """
 
