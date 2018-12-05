@@ -66,12 +66,12 @@ def findit(wheen="",dlrs="",who_store="",pmt_kind=""):
 # === copying dele cmd from below ====1615Nov18
 # === working with backund updt secton 05Dec18 tt ===
 
-def updt(id,fn="",ln="",dept="",sal=0):
+def updt(id,wheen="",dlrs="",who_store="",pmt_kind=""):
     cunk=sqlite3.connect("doctran.db")
     crsr01=cunk.cursor()
 #    conn=sqlite3.connect("emps.db")  ===GB code ==
 #    cur=conn.cursor()  == GB cde ==
-    crsr01.execute("UPDATE doc_data_tbl SET WHEEN=?, DLRS=?, WHO_STORE=?, PMT_KIND=? WHERE id=?", (wheen,dlrs,who_store,pmt_kind))
+    crsr01.execute("UPDATE doc_data_tbl SET WHEEN=?, DLRS=?, WHO_STORE=?, PMT_KIND=? WHERE id=?", (wheen,dlrs,who_store,pmt_kind,id))
     cunk.commit()
     cunk.close()
 

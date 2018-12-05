@@ -171,7 +171,7 @@ def gdr(event): # gtr = get the record
 """
 # ====== gtr = get the record or gdr = get dat record === vernacular 
 def gdr(event):
-    tt = "global"
+    global tt # = tuple()
 # ========= target tuple === gbobal variable declared
     yoid=lb01.curselection()[0]
     # gets the actual nbr in listbox = lb01 (name of listbox)
