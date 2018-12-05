@@ -14,7 +14,10 @@ def kenect():
 
     cunk.commit()
     cunk.close()
-
+# ==30Nov18 :see vid Mr Garside YT_2
+# == with squlite3.connect (quiz.db) as db:
+#=======cursor-db.connect
+#==end comment
 def addrec(wheen,dlrs,who_store,pmt_kind):
     cunk=sqlite3.connect("doctran.db")
     crsr01=cunk.cursor()
@@ -41,6 +44,9 @@ def view():
     cunk.close()
     return rows
 # === the "return rows" returns the captured data to the "calling function"
+# === above defines a new variable "rows" (could be any non-reserved word) ==
+# === and passes that "loaded cursor (crsr01)" back to the front end cmd ftn that called this
+# == backend ftn useing the "return" instruction ====
 #=== end view ftn ===
 # === begin findit functions ====== 17Nov18 tt ====
 def findit(wheen="",dlrs="",who_store="",pmt_kind=""):
@@ -58,6 +64,16 @@ def findit(wheen="",dlrs="",who_store="",pmt_kind=""):
 # ==== end findit command in back end file ===
 
 # === copying dele cmd from below ====1615Nov18
+# === working with backund updt secton 05Dec18 tt ===
+
+def updt(id,fn="",ln="",dept="",sal=0):
+    cunk=sqlite3.connect("doctran.db")
+    crsr01=cunk.cursor()
+#    conn=sqlite3.connect("emps.db")  ===GB code ==
+#    cur=conn.cursor()  == GB cde ==
+    crsr01.execute("UPDATE doc_data_tbl SET WHEEN=?, DLRS=?, WHO_STORE=?, PMT_KIND=? WHERE id=?", (wheen,dlrs,who_store,pmt_kind))
+    cunk.commit()
+    cunk.close()
 
 
 def dele(id):
@@ -140,3 +156,4 @@ def findit(mq1="",ma1=""):
 connect()
 #==================================
 """
+  
